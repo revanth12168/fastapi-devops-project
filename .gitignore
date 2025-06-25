@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+*.env
+
+# Virtual envs
+venv/
+env/
+
+# VSCode
+.vscode/
+
+# Mac system
+.DS_Store
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Pytest
+.pytest_cache/
+
+# Others
+*.sqlite3
+
