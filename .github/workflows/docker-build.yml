@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Docker Build & Push
 
 on:
   push:
@@ -10,27 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📥 Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: 🐍 Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: 📦 Install dependencies
-      run: |
-        pip install -r requirements.txt
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: ✅ (Optional) Run Tests
-      run: echo "Add tests here later"
-
-    - name: 🐳 Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-    - name: 🔨 Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/fastapi-app .
-
-    - name: 🚀 Push image to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/fastapi-app
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: revanth12168/fastapi-app:latest
 
