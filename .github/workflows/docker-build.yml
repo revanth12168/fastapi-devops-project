@@ -27,5 +27,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: revanth12168/fastapi-app:latest
+          tags: revanthdocker12168/fastapi-app:latest
+
 
